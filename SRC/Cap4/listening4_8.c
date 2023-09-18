@@ -3,6 +3,7 @@
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 /* Allocate a temporary buffer.  */
 
@@ -30,7 +31,8 @@ void *do_some_work(void *arg)
        cancelled...  */
 
     // Simulate some work
-    printf("El hilo se está ejecutando...\n");
+    printf("El hilo se está imprimiento...\n");
+    sleep(2);
 
     // Explicitly cancel the thread
     pthread_exit(NULL);
