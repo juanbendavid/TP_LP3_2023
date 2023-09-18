@@ -52,13 +52,30 @@ char* read_temp_file (temp_file_handle temp_file, size_t* length)
   return buffer;
 }
 
-int main ()
-{
-   temp_file_handle file;
-   char buffer[]="Hola Mundo", text[] = "Hey";
-   size_t size = sizeof(buffer);
-   file = write_temp_file(buffer,size);
-   strcmp(text, read_temp_file(file,size));
-   puts(text);
-   return 0;
+int main() {
+  char input_data[] = "Hola, este es un archivo temporal.";
+  size_t data_length = strlen(input_data); // Longitud de los datos
+  temp_file_handle temp_file;
+
+  // Escribir datos en el archivo temporal
+  temp_file = write_temp_file(input_data, data_length);
+
+  if (temp_file != -1) {
+    printf("Archivo temporal creado con éxito.\n");
+
+    // Leer y mostrar el contenido del archivo temporal
+    size_t length;
+    char* file_contents = read_temp_file(temp_file, &length);
+
+    if (file_contents != NULL) {
+      printf("Contenido del archivo temporal:\n%s\n", file_contents);
+      free(file_contents);
+    } else {
+      printf("Error al leer el archivo temporal.\n");
+    }
+  } else {
+    printf("Error al crear el archivo temporal.\n");
+  }
+
+  return 0;
 }
