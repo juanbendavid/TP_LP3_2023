@@ -1,5 +1,7 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include <unistd.h>
+#include <string.h>
 
 /* A handle for a temporary file created with write_temp_file.  In
    this implementation, it's just a file descriptor.  */
@@ -48,4 +50,15 @@ char* read_temp_file (temp_file_handle temp_file, size_t* length)
      go away.  */
   close (fd);
   return buffer;
+}
+
+int main ()
+{
+   temp_file_handle file;
+   char buffer[]="Hola Mundo", text[] = "Hey";
+   size_t size = sizeof(buffer);
+   file = write_temp_file(buffer,size);
+   strcmp(text, read_temp_file(file,size));
+   puts(text);
+   return 0;
 }
