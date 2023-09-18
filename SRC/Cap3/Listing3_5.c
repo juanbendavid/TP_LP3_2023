@@ -24,7 +24,6 @@ int main() {
   } else {
     printf("Se evitó una división por cero.\n");
   }
-  longjmp(env, 0);
 
   printf("SIGFPE se lanzó %d veces\n", sigfpe_count);
   return 0;
