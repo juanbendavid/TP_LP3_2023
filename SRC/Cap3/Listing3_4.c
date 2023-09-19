@@ -1,49 +1,43 @@
-#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <sys/types.h>
-#include <sys/wait.h>
 #include <unistd.h>
 
-sig_atomic_t child_exit_status;
+/* Spawn a child process running a new program.  PROGRAM is the name
+   of the program to run; the path will be searched for this program.
+   ARG_LIST is a NULL-terminated list of character strings to be
+   passed as the program's argument list.  Returns the process id of
+   the spawned process.  */
 
-void clean_up_child_process(int signal_number) {
-  /* Clean up the child process.  */
-  int status;
-  wait(&status);
-  /* Store its exit status in a global variable.  */
-  child_exit_status = status;
-  printf("Cleaning child process\n");
+int spawn(char *program, char **arg_list) {
+  pid_t child_pid;
+
+  /* Duplicate this process.  */
+  child_pid = fork();
+  if (child_pid != 0)
+    /* This is the parent process.  */
+    return child_pid;
+  else {
+    /* Now execute PROGRAM, searching for it in the path.  */
+    execvp(program, arg_list);
+    /* The execvp function returns only if an error occurs.  */
+    fprintf(stderr, "an error occurred in execvp\n");
+    abort();
+  }
 }
 
 int main() {
-  /* Handle SIGCHLD by calling clean_up_child_process.  */
-  struct sigaction sigchld_action;
-  memset(&sigchld_action, 0, sizeof(sigchld_action));
-  sigchld_action.sa_handler = &clean_up_child_process;
-  sigaction(SIGCHLD, &sigchld_action, NULL);
+  /* The argument list to pass to the "ls" command.  */
+  char *arg_list[] = {
+      "ls",           /* argv[0], the name of the program.  */
+      "-l", "/", NULL /* The argument list must end with a NULL.  */
+  };
 
-  /* Now do things, including forking a child process.  */
-  /* ...  */
+  /* Spawn a child process running the "ls" command.  Ignore the
+     returned child process id.  */
+  spawn("ls", arg_list);
 
-  pid_t child_pid;
-
-  /* Create a child process.  */
-  child_pid = fork();
-  if (child_pid > 0) {
-    /* This is the parent process.  Sleep for a minute.  */
-    sleep(60);
-  } else {
-    /* This is the child process.  Exit immediately.  */
-    exit(0);
-  }
-
-  if (WIFEXITED(child_exit_status))
-    printf("the child process exited normally, with exit code %d\n",
-           WEXITSTATUS(child_exit_status));
-  else
-    printf("the child process exited abnormally\n");
+  printf("done with main program\n");
 
   return 0;
 }
