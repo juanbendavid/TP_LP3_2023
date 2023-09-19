@@ -1,6 +1,6 @@
 #include<stdio.h>
 int main () 
 {
-  printf("retornando %d",f());
+  printf("retornando %d\n",f());
   return f ();
 }
