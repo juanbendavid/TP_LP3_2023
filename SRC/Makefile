@@ -7,7 +7,7 @@ EXE_C := $(patsubst %.c,build/%,$(SRCS_C))
 EXE_CPP := $(patsubst %.cpp,build/%,$(SRCS_CPP))
 
 # Regla para el objetivo principal
-main: $(EXE_C) $(EXE_CPP) build/Cap1/reciprocal
+main: $(EXE_C) $(EXE_CPP) build/Cap1/reciprocal build/Cap2/app
 	g++ $^ -o $@
 
 # Regla para los archivos ejecutables .c
@@ -71,8 +71,6 @@ Listing1_2: build/Cap1/reciprocal
 
 Listing1_3: build/Cap1/reciprocal
 
-.PHONY: Listing2_% Listing3_% Listing4_% clean all reciprocal Listing1_1 Listing1_2 Listing1_3 dirs
-
 # Regla para compilar Listing2_7.c y Listing2_8.c juntos
 app: Listing2_7.o Listing2_8.o libtest.a | dirs2
 	gcc -o build/Cap2/app build/Cap2/Listing2_8.o -L build/Cap2/ -ltest
@@ -97,4 +95,5 @@ Listing2_8: app
 
 Listing2_7: app
 
+.PHONY: clean all reciprocal app dirs dirs2 Listing1_% Listing2_% Listing3_% Listing4_%
 
