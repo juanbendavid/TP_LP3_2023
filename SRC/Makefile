@@ -6,10 +6,6 @@ SRCS_CPP := $(wildcard Cap4/*.cpp)
 EXE_C := $(patsubst %.c,build/%,$(SRCS_C))
 EXE_CPP := $(patsubst %.cpp,build/%,$(SRCS_CPP))
 
-# Regla para el objetivo principal
-main: $(EXE_C) $(EXE_CPP) build/Cap1/reciprocal build/Cap2/app
-	g++ $^ -o $@
-
 # Regla para los archivos ejecutables .c
 build/%: %.c | build
 	mkdir -p $(dir $@)
@@ -26,29 +22,23 @@ build:
 
 # Regla para limpiar los archivos generados
 clean:
-	rm -rf build main
+	rm -rf build
 
 # Regla all para generar todos los archivos ejecutables
 all: $(EXE_C) $(EXE_CPP) build/Cap1/reciprocal app Listing2_6 Listing2_9
 
 # Reglas individuales para cada archivo
 Listing2_1: build/Cap2/Listing2_1
-	mkdir -p $(dir $@)
 
 Listing2_2: build/Cap2/Listing2_2
-	mkdir -p $(dir $@)
 
 Listing2_3: build/Cap2/Listing2_3
-	mkdir -p $(dir $@)
 
 Listing2_4: build/Cap2/Listing2_4
-	mkdir -p $(dir $@)
 
 Listing2_5: build/Cap2/Listing2_5
-	mkdir -p $(dir $@)
 
 Listing2_6: build/Cap2/Listing2_6
-	mkdir -p $(dir $@)
 	cp ./Cap2/HolaMundo.txt ./build/Cap2/
 
 Listing3_%: build/Cap3/Listing3_%
