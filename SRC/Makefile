@@ -29,7 +29,7 @@ clean:
 	rm -rf build main
 
 # Regla all para generar todos los archivos ejecutables
-all: $(EXE_C) $(EXE_CPP) build/Cap1/reciprocal app Listing2_6
+all: $(EXE_C) $(EXE_CPP) build/Cap1/reciprocal app Listing2_6 Listing2_9
 
 # Reglas individuales para cada archivo
 Listing2_1: build/Cap2/Listing2_1
@@ -95,5 +95,8 @@ Listing2_8: app
 
 Listing2_7: app
 
-.PHONY: clean all reciprocal app dirs dirs2 Listing1_% Listing2_% Listing3_% Listing4_%
+Listing2_9: Cap2/Listing2_9.c
+	mkdir -p build/Cap2
+	gcc -o build/Cap2/Listing2_9 Cap2/Listing2_9.c -ltiff.PHONY: clean all reciprocal app dirs dirs2 Listing1_% Listing2_% Listing3_% Listing4_%
 
+.PHONY: clean all reciprocal app dirs dirs2 Listing1_% Listing2_% Listing3_% Listing4_%
