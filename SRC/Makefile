@@ -97,6 +97,7 @@ Listing2_7: app
 
 Listing2_9: Cap2/Listing2_9.c
 	mkdir -p build/Cap2
-	gcc -o build/Cap2/Listing2_9 Cap2/Listing2_9.c -ltiff.PHONY: clean all reciprocal app dirs dirs2 Listing1_% Listing2_% Listing3_% Listing4_%
+	gcc -o build/Cap2/Listing2_9 Cap2/Listing2_9.c -ltiff
+
 
 .PHONY: clean all reciprocal app dirs dirs2 Listing1_% Listing2_% Listing3_% Listing4_%
